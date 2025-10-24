@@ -13,7 +13,7 @@ from src import res, version
 
 if sys.version_info.major < 3:
 	reload(sys)
-	sys.setdefaultencoding('utf8')
+	sys.setdefaultencoding('utf8') # type: ignore
 
 g_strHelp = """\
 用法: {} [项目路径名称]...
@@ -56,6 +56,8 @@ class CmdHandle:
 			for op, v in options:
 				if op in ["--version", "-v"]:
 					print(version.__version__)
+					print("author: hzl")
+					print("create c++ project")
 					os.chdir(g_strCmdPath)
 					sys.exit(0)
 				if op in ["--help", "-h"]:

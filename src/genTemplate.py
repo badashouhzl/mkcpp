@@ -4,7 +4,7 @@ import codecs, os, re
 
 appTemplateRoot: str = "../../cpp/cppAppTemplate/"
 
-listFile: list[str] = {
+listFile: set[str] = {
 	os.path.join(appTemplateRoot, ".vscode/launch.json"),
 	os.path.join(appTemplateRoot, ".vscode/settings.json"),
 	os.path.join(appTemplateRoot, "src/cppAppTemplate.cpp"),
@@ -36,7 +36,7 @@ strFileInfoFormat: str = """
 # "路径": ""
 strFileInfo: str = ""
 # "文件夹名称": ""
-dictDirInfo: dict[str: str] = {}
+dictDirInfo: dict[str, str] = {}
 with codecs.open('src/res.py', 'w', 'utf-8') as fw:
 
 	i: int = 0
@@ -46,10 +46,12 @@ with codecs.open('src/res.py', 'w', 'utf-8') as fw:
 		with codecs.open(n, "r", 'utf-8') as f:
 			s = f.read()
 			s = s.replace('\\', "\\\\")
+			
 			if os.path.splitext(n)[1] in [".h", ".hpp", ".cpp", ".c", ".cxx", ".json"]:
 				s = re.sub(r'//[^-].*', '', s)
 			else:
 				s = re.sub(r'#[^-].*', '', s)
+
 			s = re.sub(r'^ +$\n', '', s, flags=re.MULTILINE)
 			s = re.sub(r'\n{3,}', '\n\n', s, flags=re.MULTILINE)
 			fw.write(strFormat.format(v, s))
