@@ -1,49 +1,5 @@
 
 txt_0: str = '''
-{
-	
-	"[h]": {
-		"editor.formatOnSave": true,
-		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
-	},
-	"[hpp]": {
-		"editor.formatOnSave": true,
-		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
-	},
-	"[cpp]": {
-		"editor.formatOnSave": true,
-		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
-	},
-	"[c]": {
-		"editor.formatOnSave": true,
-		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
-	},
-	"[cxx]": {
-		"editor.formatOnSave": true,
-		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
-	},
-}
-'''
-
-txt_1: str = '''
-#ifndef __H_CPPAPPTEMPLATE_H__
-#define __H_CPPAPPTEMPLATE_H__
-
-class CppAppTemplate
-{
-public:
-	CppAppTemplate();
-	virtual ~CppAppTemplate();
-
-public:
-	virtual bool init();
-};
-
-#endif //- __H_CPPAPPTEMPLATE_H__
-
-'''
-
-txt_2: str = '''
 #- set(CMAKE_CXX_COMPILER /usr/local/bin/g++)
 #- set(CMAKE_C_COMPILER /usr/local/bin/gcc)
 
@@ -83,10 +39,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 message("CMAKE_BUILD_TYPE:=" ${CMAKE_BUILD_TYPE})
-
-set(CMAKE_CXX_FLAGS "-W -Wall")
-set(CMAKE_CXX_FLAGS_RELEASE "-O2  -static")
-set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ggdb -D__H_DEBUT__")
 
 set(LIB_FILES "")						#- 链接库名称
 set(SRC_LISTS "")						#- 源文件路径
@@ -147,11 +99,11 @@ target_link_libraries(${OUT_FILE_NAME} ${LIB_FILES})
 
 '''
 
-txt_3: str = '''
+txt_1: str = '''
 {
     "version": "0.2.0",
     "configurations": [
-        //- GDB Debugger - Beyond
+        //- GDB Debugger - Beyond   这个可以直接操作 gdb 命令
         {
             "name": "beyond",
             "type": "by-gdb",
@@ -160,7 +112,7 @@ txt_3: str = '''
             "cwd": "${workspaceRoot}",
             "programArgs": "",
         },
-        //- C/C++ Debug (gdb)
+        //- C/C++ Debug (gdb)       这个是与 vscode 集成完整的
         {
             "name": "cppdbg",
             "type": "cppdbg",
@@ -210,14 +162,255 @@ txt_3: str = '''
 }
 '''
 
+txt_2: str = '''
+#ifndef __H_CPPAPPTEMPLATE_H__
+#define __H_CPPAPPTEMPLATE_H__
+
+class CppAppTemplate
+{
+public:
+	CppAppTemplate();
+	virtual ~CppAppTemplate();
+
+public:
+	virtual bool init();
+};
+
+#endif //- __H_CPPAPPTEMPLATE_H__
+
+'''
+
+txt_3: str = '''
+{
+	
+	"[h]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+	},
+	"[hpp]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+	},
+	"[cpp]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+	},
+	"[c]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+	},
+	"[cxx]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+	},
+}
+'''
+
 txt_4: str = '''
-build/
-.cache/
+c++ 项目模板，用于项目 mkcpp 项目的模板参照使用
+```
+cppAppTemplate             // 项目根目录
+├─ .vscode/                // vscode 项目级配置
+|  ├─ launch.json          // 调试配置文件
+|  └─ settings.json        // vscode 设置
+├─ .clang-format           // 格式化配置(项目级)
+├─ .clangd                 // clangd 语言服务配置(项目级)
+├─ .gitignore              // git 排除文件配置
+├─ build/                  // 所有生成文件存放在此文件夹
+├─ CMakeLists.txt          // cmake 项目文件
+├─ main.cpp                // c++ main 文件
+├─ README.md               // 项目说明文件
+└─ src/                    // 源代码文件夹
+   ├─ cppAppTemplate.cpp   // 代码文件
+   ├─ cppAppTemplate.h     // 代码文件
+   └─ src.cmake            // cmake 配置文件
+
+```
+'''
+
+txt_5: str = '''
+
+
+BasedOnStyle: LLVM
+
+UseTab: Always
+
+IndentWidth: 4
+
+TabWidth: 4
+
+IndentAccessModifiers: false
+
+AccessModifierOffset: -4
+
+AlignAfterOpenBracket: DontAlign
+
+MaxEmptyLinesToKeep: 2
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterClass: true
+  AfterStruct: true
+  AfterEnum: true
+  AfterNamespace: true
+  AfterFunction: true
+  AfterControlStatement: false
+  AfterExternBlock: true
+  BeforeCatch: false
+  BeforeElse: false
+  SplitEmptyFunction: false
+
+AlignConsecutiveDeclarations: true
+
+AlignConsecutiveAssignments: true
+
+AllowShortFunctionsOnASingleLine: None
+
+SortIncludes: true
+
+IncludeIsMainRegex: '([-_](test|unittest))?$'
+
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '^<[^/]+.h>'
+    Priority: 1
+    SortPriority: 0
+  - Regex: '^<[^>]+[^.h]{2}>$'
+    Priority: 2
+    SortPriority: 0
+  - Regex: '^<[^>]+/+.+>'
+    Priority: 3
+    SortPriority: 0
+  - Regex: '^"'
+    Priority: 4
+    SortPriority: 0
+
+'''
+
+txt_6: str = '''
+Diagnostics:
+  UnusedIncludes: Strict
+  MissingIncludes: Strict
+  ClangTidy: 
+    Add:  
+      - modernize-*
+      - performance-*
+      - bugprone-*
+      - cppcoreguidelines-*
+      - cert-*
+      - readability-identifier-naming
+      - readability-braces-around-statements
+
+    Remove: 
+      - modernize-use-trailing-return-type
+      - bugprone-easily-swappable-parameters
+      - cppcoreguidelines-special-member-functions
+      - cppcoreguidelines-avoid-magic-numbers
+      - cppcoreguidelines-owning-memory
+      - cppcoreguidelines-pro-bounds-constant-array-index
+    CheckOptions:
+      WarnOnFloatingPointNarrowingConversion: false
+      readability-identifier-naming.VariableCase: camelCase
+      readability-identifier-naming.ClassMemberCase: camelBack
+      readability-identifier-naming.ClassMemberPrefix: m_
+      cppcoreguidelines-non-private-member-variables-in-classes.AllowedClasses: ".*Base$"
+
+CompileFlags:
+  Add: [
+    #- 明确指定 C++ 标准版本为 C++20
+    -std=c++20,
+
+    #- 推荐开启
+    #- 启用大多数常用警告（如未使用变量、格式字符串不匹配等）
+    -Wall,
+    #- 启用额外的警告（比 -Wall 更严格，例如未使用的函数参数、比较有符号/无符号数等）
+    -Wextra,
+    #- 针对隐式类型转换（如 int 转 float、窄化转换等）发出警告，有助于发现潜在精度丢失或逻辑错误
+    -Wconversion,
+    #- 当局部变量或参数遮蔽（shadow）了外层作用域中的同名变量时发出警告，避免意外覆盖
+    -Wshadow,
+    #- 检查格式化字符串与参数是否匹配（如 printf/scanf）
+    -Wformat=2,
+    #- 警告未初始化的自动变量（可能读取垃圾值）
+    -Wuninitialized,
+    #- 警告逻辑错误，如 if (x = 5)（赋值而非比较）
+    -Wparentheses,
+    #- 警告返回局部变量地址或引用（悬空指针）
+    -Wreturn-local-addr,
+    #- 警告函数声明但未定义（链接时可能失败）
+    -Wmissing-declarations,
+    #- 警告移动后仍使用对象（Clang + C++11 以上）
+    -Wuse-after-move,
+
+    #- 
+    #- 
+    #- -Wpedantic,
+    #- 
+    #- -Wsign-compare,
+    #- 
+    #- -Wpointer-to-int-cast,
+    #- -Wint-to-pointer-cast,
+    #- 
+    #- -Wunused,
+    #- 
+    #- -Wswitch-default,
+    #- 
+    #- -Wswitch-enum, 
+
+    #- 去除警告语法 
+    #- -Wno-<警告名称>
+
+  ]
 
 
 '''
 
-txt_5: str = '''
+txt_7: str = '''
+#include <iostream>
+#include <memory>
+
+#include "src/cppAppTemplate.h"
+
+int main()
+{
+#if __H_DEBUT__
+	std::cout << "run debug version"
+			  << std::endl; //- NOLINT(performance-avoid-endl)
+#endif
+
+	auto ptr = std::make_shared<CppAppTemplate>();
+	if (!ptr->init()) {
+		return -1;
+	}
+
+	std::cout << "create " << __APP_NAME__ << " success" << '\\n';
+
+	return 0;
+}
+
+'''
+
+txt_8: str = '''
+#include "cppAppTemplate.h"
+
+#include <iostream>
+
+CppAppTemplate::CppAppTemplate()
+{}
+
+CppAppTemplate::~CppAppTemplate()
+{}
+
+bool CppAppTemplate::init()
+{
+	std::cout << __PRETTY_FUNCTION__ << '\\n';
+
+	return true;
+}
+
+'''
+
+txt_9: str = '''
 
 #- include(${CMAKE_CURRENT_LIST_DIR}/<目录名/*.cmake>)
 
@@ -286,158 +479,26 @@ set(CMAKE_CXX_FLAGS_RELEASE
 	)
 '''
 
-txt_6: str = '''
-#include "cppAppTemplate.h"
+txt_10: str = '''
+build/
+.cache/
 
-#include <iostream>
-
-CppAppTemplate::CppAppTemplate()
-{}
-
-CppAppTemplate::~CppAppTemplate()
-{}
-
-bool CppAppTemplate::init()
-{
-	std::cout << __PRETTY_FUNCTION__ << '\\n';
-
-	return true;
-}
-
-'''
-
-txt_7: str = '''
-
-
-BasedOnStyle: LLVM
-
-UseTab: Always
-
-IndentWidth: 4
-
-TabWidth: 4
-
-IndentAccessModifiers: false
-
-AccessModifierOffset: -4
-
-AlignAfterOpenBracket: DontAlign
-
-MaxEmptyLinesToKeep: 2
-
-BreakBeforeBraces: Custom
-BraceWrapping:
-  AfterClass: true
-  AfterStruct: true
-  AfterEnum: true
-  AfterNamespace: true
-  AfterFunction: true
-  AfterControlStatement: false
-  AfterExternBlock: true
-  BeforeCatch: false
-  BeforeElse: false
-  SplitEmptyFunction: false
-
-AlignConsecutiveDeclarations: true
-
-AlignConsecutiveAssignments: true
-
-AllowShortFunctionsOnASingleLine: None
-
-SortIncludes: true
-
-IncludeIsMainRegex: '([-_](test|unittest))?$'
-
-IncludeBlocks: Regroup
-IncludeCategories:
-  - Regex: '^<[^/]+.h>'
-    Priority: 1
-    SortPriority: 0
-  - Regex: '^<[^>]+[^.h]{2}>$'
-    Priority: 2
-    SortPriority: 0
-  - Regex: '^<[^>]+/+.+>'
-    Priority: 3
-    SortPriority: 0
-  - Regex: '^"'
-    Priority: 4
-    SortPriority: 0
-
-'''
-
-txt_8: str = '''
-#include <iostream>
-#include <memory>
-
-#include "src/cppAppTemplate.h"
-
-int main()
-{
-#if __H_DEBUT__
-	std::cout << "run debug version"
-			  << std::endl; 
-#endif
-
-	auto ptr = std::make_shared<CppAppTemplate>();
-	if (!ptr->init()) {
-		return -1;
-	}
-
-	std::cout << "create " << __APP_NAME__ << " success" << '\\n';
-
-	return 0;
-}
-
-'''
-
-txt_9: str = '''
-Diagnostics:
-  UnusedIncludes: Strict
-  ClangTidy: 
-    Add:  
-      - modernize-*
-      - performance-*
-      - bugprone-*
-      - cppcoreguidelines-*
-      - cert-*
-      - readability-identifier-naming
-      - readability-braces-around-statements
-
-    Remove: 
-      - modernize-use-trailing-return-type
-      - bugprone-easily-swappable-parameters
-      - cppcoreguidelines-special-member-functions
-      - cppcoreguidelines-avoid-magic-numbers
-      - cppcoreguidelines-owning-memory
-    CheckOptions:
-      WarnOnFloatingPointNarrowingConversion: false
-      readability-identifier-naming.VariableCase: camelCase
-      readability-identifier-naming.ClassMemberCase: camelBack
-      readability-identifier-naming.ClassMemberPrefix: m_
-      cppcoreguidelines-non-private-member-variables-in-classes.AllowedClasses: ".*Base$"
-
-CompileFlags:
-  Add: [
-    #- 明确指定 C++ 标准版本为 C++20
-    -std=c++20,
-    #- -Wno-documentation,
-    #- -Wno-missing-prototypes,
-  ]
 
 '''
 
 listDirs: list[str] = [".vscode", "src"]
 
 fileInfo: dict[str, str] = {
-	".vscode/settings.json": txt_0,
-	"src/cppAppTemplate.h": txt_1,
-	"CMakeLists.txt": txt_2,
-	".vscode/launch.json": txt_3,
-	".gitignore": txt_4,
-	"src/src.cmake": txt_5,
-	"src/cppAppTemplate.cpp": txt_6,
-	".clang-format": txt_7,
-	"main.cpp": txt_8,
-	".clangd": txt_9,
+	"CMakeLists.txt": txt_0,
+	".vscode/launch.json": txt_1,
+	"src/cppAppTemplate.h": txt_2,
+	".vscode/settings.json": txt_3,
+	"README.md": txt_4,
+	".clang-format": txt_5,
+	".clangd": txt_6,
+	"main.cpp": txt_7,
+	"src/cppAppTemplate.cpp": txt_8,
+	"src/src.cmake": txt_9,
+	".gitignore": txt_10,
 
 }

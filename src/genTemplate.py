@@ -15,6 +15,7 @@ listFile: set[str] = {
 	os.path.join(appTemplateRoot, ".gitignore"),
 	os.path.join(appTemplateRoot, "CMakeLists.txt"),
 	os.path.join(appTemplateRoot, "main.cpp"),
+	os.path.join(appTemplateRoot, "README.md"),
 }
 
 strFormat = """
